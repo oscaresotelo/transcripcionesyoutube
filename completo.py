@@ -158,7 +158,7 @@ else:
  
                     st.session_state.video_url = video['url']  
                     resultado = obtener_transcripcion(video['url'])  
-                    transcripcion = "Resumir  el siguiente tema,  " + video['title'] + ",  si contiene algo relacionado a programacion extraer el codigo que meciona el siguiente texto : "   + resultado   
+                    transcripcion = "Resumir  el siguiente tema,  " + video['title'] + ", y detallar,   si contiene algo relacionado a programacion extraer el codigo que meciona el siguiente texto : "   + resultado   
                     if transcripcion:
 
                         headers = {"Authorization": "Bearer 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"}  
