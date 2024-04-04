@@ -1,0 +1,5 @@
+streamlit
+pytube
+youtube_transcript_api
+youtube-search-python
+huggingface_hub
