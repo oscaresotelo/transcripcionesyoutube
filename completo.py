@@ -159,7 +159,7 @@ else:
  
                     st.session_state.video_url = video['url']  
                     resultado = obtener_transcripcion(video['url'])  
-                    transcripcion = "explica por favor  detalladamente,  el siguiente texto: "   + resultado   + "genera ejemplos del texto anterior"
+                    transcripcion = "explica por favor  detalladamente,  el siguiente texto: "   + resultado   + "genera ejemplos completos del texto anterior"
                     if transcripcion:
 
                         headers = {"Authorization": "Bearer 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"}  
