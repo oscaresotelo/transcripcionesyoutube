@@ -1,0 +1,49 @@
+function doPost(e) {
+  var requestBody = JSON.parse(e.postData.contents);
+
+  // Extraer los datos de la solicitud
+  var groupName = requestBody.groupName;
+  var isMessageFromGroup = requestBody.isMessageFromGroup;
+  var messageId = requestBody.messageId;
+  var receiveMessagePattern = requestBody.receiveMessagePattern;
+  var receiveMessagesAppld = requestBody.receiveMessagesAppld;
+  var senderMessage = requestBody.senderMessage.trim(); // Eliminar espacios en blanco al principio y al final
+  var senderName = requestBody.senderName;
+
+  // Procesar los datos según sea necesario
+  var responseMessage = "Ingrese una opción válida"; // Mensaje de respuesta predeterminado
+  var spreadsheetId = '10OxmeAqFgt_hI3KOgxRTTuq_99EmYKKVQDzmucg5Bfg'; // Reemplaza 'ID_DE_TU_HOJA_DE_CALCULO' con el ID de tu hoja de cálculo
+  var sheetRespuestas = SpreadsheetApp.openById(spreadsheetId).getSheetByName('Respuestas'); // Abrir la hoja "Respuestas"
+
+  if (senderMessage === "1") {
+    var sheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName('Electro'); // Abrir la hoja "Electro"
+    var columnValues = sheet.getRange("F:F").getValues(); // Obtener los valores de toda la columna F
+    responseMessage = columnValues.flat().filter(String).join(", "); // Convertir la matriz en una cadena y unirla con comas
+  } else if (senderMessage === "2") {
+    var sheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName('Belleza'); // Abrir la hoja "Belleza"
+    var columnValues = sheet.getRange("F:F").getValues(); // Obtener los valores de toda la columna F
+    responseMessage = columnValues.flat().filter(String).join(", "); // Convertir la matriz en una cadena y unirla con comas
+  }
+
+  // Buscar en la columna B el valor que contenga el mensaje
+  var rangeRespuestas = sheetRespuestas.getRange("B:C").getValues(); // Obtener los valores de las celdas en el rango B:C
+
+  for (var i = 0; i < rangeRespuestas.length; i++) {
+    if (rangeRespuestas[i][0].toString().toLowerCase().includes(senderMessage.toLowerCase())) {
+      var rawResponse = rangeRespuestas[i][1]; // Obtener el valor de la columna C
+      responseMessage = rawResponse.replace('\\n', '\n'); // Reemplazar "\n" con una nueva línea en el mensaje de respuesta
+      break;
+    }
+  }
+
+  // Crear la respuesta en formato JSON
+  var responseData = {
+    data: [{
+      message: responseMessage
+    }]
+  };
+
+  // Devolver la respuesta en formato JSON
+  return ContentService.createTextOutput(JSON.stringify(responseData))
+    .setMimeType(ContentService.MimeType.JSON);
+}

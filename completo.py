@@ -76,6 +76,7 @@ from youtube_transcript_api import YouTubeTranscriptApi
 from youtubesearchpython import VideosSearch , Search 
 from huggingface_hub import InferenceClient 
 import pandas as pd  
+from youtube_search import YoutubeSearch
 
 hide_st_style = """
             <style>
@@ -158,7 +159,7 @@ else:
  
                     st.session_state.video_url = video['url']  
                     resultado = obtener_transcripcion(video['url'])  
-                    transcripcion = "Resumir  el siguiente tema,  " + video['title'] + ", y detallar,   si contiene algo relacionado a programacion extraer el codigo que meciona el siguiente texto : "   + resultado   
+                    transcripcion = "Resumir  el siguiente tema relacioando a, ,  " + video['title'] + ", y explicar,   si contiene algo relacionado a programacion extraer el codigo que meciona el siguiente texto : "   + resultado   
                     if transcripcion:
 
                         headers = {"Authorization": "Bearer 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"}  
